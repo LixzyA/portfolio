@@ -1,5 +1,6 @@
 import * as React from "react"
 import { EnvelopeSimple, GithubLogo, LinkedinLogo, PaperPlaneTilt } from "@phosphor-icons/react"
+import { useForm, ValidationError } from '@formspree/react';
 
 const email = "felix.antony168@gmail.com"
 const github = "https://github.com/LixzyA"
@@ -30,22 +31,7 @@ const contactLinks = [
 ]
 
 export function ContactSection() {
-  const [form, setForm] = React.useState({ name: "", email: "", message: "" })
-  const [status, setStatus] = React.useState<"idle" | "sending" | "sent" | "error">("idle")
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-  // TODO: Integrate with backend API to send the form data
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus("sending")
-    // Simulate sending (replace with real API call)
-    await new Promise((r) => setTimeout(r, 1500))
-    setStatus("sent")
-    setForm({ name: "", email: "", message: "" })
-    setTimeout(() => setStatus("idle"), 4000)
-  }
+  const [state, handleSubmit] = useForm("mgoqlerz")
 
   return (
     <section
@@ -111,7 +97,7 @@ export function ContactSection() {
 
           {/* Contact Form */}
           <div className="rounded-xl border border-border bg-card/50 p-7 backdrop-blur-sm lg:col-span-3">
-            {status === "sent" ? (
+            {state.succeeded ? (
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center py-10">
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
                   <PaperPlaneTilt size={24} weight="duotone" />
@@ -136,11 +122,10 @@ export function ContactSection() {
                       name="name"
                       type="text"
                       required
-                      value={form.name}
-                      onChange={handleChange}
                       placeholder="Your name"
                       className="h-10 rounded-lg border border-border bg-background/50 px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                     />
+                    <ValidationError prefix="Name" field="name" errors={state.errors} className="text-xs text-red-400 mt-0.5" />
                   </div>
 
                   {/* Email */}
@@ -153,11 +138,10 @@ export function ContactSection() {
                       name="email"
                       type="email"
                       required
-                      value={form.email}
-                      onChange={handleChange}
                       placeholder="your@email.com"
                       className="h-10 rounded-lg border border-border bg-background/50 px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                     />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} className="text-xs text-red-400 mt-0.5" />
                   </div>
                 </div>
 
@@ -171,20 +155,19 @@ export function ContactSection() {
                     name="message"
                     required
                     rows={6}
-                    value={form.message}
-                    onChange={handleChange}
                     placeholder="Tell me about your project or just say hi..."
                     className="resize-none rounded-lg border border-border bg-background/50 px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   />
+                  <ValidationError prefix="Message" field="message" errors={state.errors} className="text-xs text-red-400 mt-0.5" />
                 </div>
 
                 <button
                   type="submit"
-                  disabled={status === "sending"}
+                  disabled={state.submitting}
                   id="contact-submit"
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {status === "sending" ? (
+                  {state.submitting ? (
                     <>
                       <span className="h-3.5 w-3.5 rounded-full border-2 border-current border-t-transparent animate-spin" />
                       Sending…
