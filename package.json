@@ -1,5 +1,6 @@
 {
   "name": "portfolio",
+  "homepage": "https://LixzyA.github.io/portfolio/",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -9,7 +10,9 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fontsource-variable/eb-garamond": "^5.2.7",
