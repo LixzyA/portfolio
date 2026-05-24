@@ -7,4 +7,4 @@ The website is made with Vite + React.
 
 To run / deploy:
 
-``` npm run deploy
+`npm run deploy`

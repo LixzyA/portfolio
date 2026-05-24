@@ -1,4 +1,3 @@
-import * as React from "react"
 import { EnvelopeSimple, GithubLogo, LinkedinLogo, PaperPlaneTilt } from "@phosphor-icons/react"
 import { useForm, ValidationError } from '@formspree/react';
 
