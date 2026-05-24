@@ -1,4 +1,4 @@
-import { GithubLogo, ArrowSquareOut, Star } from "@phosphor-icons/react"
+import { GithubLogo, ArrowSquareOut } from "@phosphor-icons/react"
 
 const projects = [
   {
