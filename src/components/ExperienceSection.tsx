@@ -2,7 +2,7 @@ const experiences = [
   {
     company: "OPPO Indonesia",
     role: "System Project & Support",
-    period: "Aug 2025 - Present",
+    period: "Aug 2025 - Aug 2026",
     location: "Jakarta, Indonesia",
     type: "Full-time",
     description:
